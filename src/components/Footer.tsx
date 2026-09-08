@@ -15,72 +15,76 @@ const Footer = () => {
   return (
     <footer className="border-t border-line bg-canvas">
       <div className="edge">
-        {/* wordmark band. The conversion ask lives in the band directly
-            above this one, so the footer stays identity and navigation. */}
-        <div className="border-b border-line py-14">
-          <BrandLogo size="h-11" />
-          <p className="mt-6 max-w-measure text-[15px] leading-relaxed text-dim">
-            Claims-based predictive analytics for organizations that carry
-            healthcare risk. Every forecast denominated in dollars, built on a
-            95%+ normalized dataset.
-          </p>
-        </div>
+        {/* Identity sits to the left of the link matrix rather than in its own
+            band above it, so the footer reads as one row. The conversion ask
+            lives in the band directly above, leaving this to identity and
+            navigation. */}
+        <div className="grid gap-x-8 gap-y-12 py-14 lg:grid-cols-12">
+          <div className="lg:col-span-3">
+            <BrandLogo size="h-11" />
+            <p className="mt-6 max-w-measure text-[15px] leading-relaxed text-dim">
+              Claims-based predictive analytics for organizations that carry
+              healthcare risk. Every forecast denominated in dollars, built on a
+              95%+ normalized dataset.
+            </p>
+          </div>
 
-        {/* link matrix */}
-        <div className="grid gap-x-8 gap-y-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
-          {navigation
-            .filter((g) => g.items)
-            .map((group) => (
-              <div key={group.label}>
-                <h4 className="label text-dim2">{group.label}</h4>
-                <ul className="mt-5 space-y-2.5">
-                  {[...group.items!, ...(group.spotlight?.items ?? [])].map((item) => (
-                    <li key={item.to}>
-                      <Link
-                        to={item.to}
-                        className="text-[13.5px] leading-snug text-ink/70 transition-colors hover:text-navy"
-                      >
-                        {item.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          {/* link matrix */}
+          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:col-span-9 lg:grid-cols-4">
+            {navigation
+              .filter((g) => g.items)
+              .map((group) => (
+                <div key={group.label}>
+                  <h4 className="label text-dim2">{group.label}</h4>
+                  <ul className="mt-5 space-y-2.5">
+                    {[...group.items!, ...(group.spotlight?.items ?? [])].map((item) => (
+                      <li key={item.to}>
+                        <Link
+                          to={item.to}
+                          className="text-[13.5px] leading-snug text-ink/70 transition-colors hover:text-navy"
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
 
-          <div>
-            <h4 className="label text-dim2">Elsewhere</h4>
-            <ul className="mt-5 space-y-2.5">
-              <li>
-                <Link
-                  to="/resources"
-                  className="text-[13.5px] text-ink/70 transition-colors hover:text-navy"
-                >
-                  Insights
-                </Link>
-              </li>
-              {legal.map((l) => (
-                <li key={l.to}>
+            <div>
+              <h4 className="label text-dim2">Elsewhere</h4>
+              <ul className="mt-5 space-y-2.5">
+                <li>
                   <Link
-                    to={l.to}
+                    to="/resources"
                     className="text-[13.5px] text-ink/70 transition-colors hover:text-navy"
                   >
-                    {l.label}
+                    Insights
                   </Link>
                 </li>
-              ))}
-              <li>
-                <a
-                  href="https://www.linkedin.com/company/health-cost-risk-management-llc/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-[13.5px] text-ink/70 transition-colors hover:text-navy"
-                >
-                  <Linkedin className="h-3.5 w-3.5" strokeWidth={1.8} />
-                  LinkedIn
-                </a>
-              </li>
-            </ul>
+                {legal.map((l) => (
+                  <li key={l.to}>
+                    <Link
+                      to={l.to}
+                      className="text-[13.5px] text-ink/70 transition-colors hover:text-navy"
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <a
+                    href="https://www.linkedin.com/company/health-cost-risk-management-llc/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-[13.5px] text-ink/70 transition-colors hover:text-navy"
+                  >
+                    <Linkedin className="h-3.5 w-3.5" strokeWidth={1.8} />
+                    LinkedIn
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
