@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#050B18" />
+    <meta name="color-scheme" content="dark" />
+
+    <title>HCRM | Health Cost &amp; Risk Management — Claims Predictive Analytics</title>
+
+    <meta name="author" content="HCRM" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta
+      name="description"
+      content="Health Risk Monitor reads 24 months of medical and pharmacy claims and forecasts the next twelve in dollars, on a dataset normalized to 95%+ accuracy."
+    />
+
+    <link rel="canonical" href="https://www.hcrm.com/" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="HCRM" />
+    <meta property="og:title" content="HCRM | Health Cost &amp; Risk Management" />
+    <meta
+      property="og:description"
+      content="See the claim before it forms. Claims-based predictive analytics that forecasts healthcare spending 12 months out, on a 95%+ normalized dataset."
+    />
+    <meta property="og:url" content="https://www.hcrm.com/" />
+    <!-- TODO [[CLIENT-SUPPLIED]]: 1200x630 share image, uploaded to /public and referenced here. -->
+    <meta property="og:image" content="https://www.hcrm.com/og-hcrm.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HCRM | Health Cost &amp; Risk Management" />
+    <meta
+      name="twitter:description"
+      content="See the claim before it forms. Claims-based predictive analytics for organizations that carry healthcare risk."
+    />
+    <meta name="twitter:image" content="https://www.hcrm.com/og-hcrm.png" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "HCRM",
+      "alternateName": "Health Cost & Risk Management",
+      "url": "https://www.hcrm.com",
+      "description": "HCRM turns claims data into dollars-at-risk with Health Risk Monitor, a claims-based predictive analytics platform that forecasts healthcare spending, identifies high-risk members early, and measures health-program outcomes on a dataset normalized to 95%+ accuracy.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Sales",
+        "areaServed": "US",
+        "availableLanguage": ["English"]
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "HCRM",
+      "url": "https://www.hcrm.com"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Health Risk Monitor",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "Claims-based predictive analytics that ingests medical and pharmacy claims from any source, normalizes them to 95%+ accuracy, forecasts member and group spend twelve months forward, and measures health-program outcomes against a predicted baseline.",
+      "publisher": { "@type": "Organization", "name": "HCRM" }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Health Risk Monitor (HRM)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "HRM is HCRM's predictive analytics platform. It ingests medical and pharmacy claims, normalizes them to 95%+ accuracy, and forecasts healthcare spending at member and group level twelve months forward, so cost can be managed before it is incurred."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is 95%+ normalization accuracy measured?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is measured across client datasets after ingestion. The engine standardizes provider names, reconciles procedure and diagnosis code sets, maps pharmacy NDC identifiers to GPI, removes duplicates and validates each claim against clinical logic rules. Claims it cannot resolve are surfaced as exceptions rather than passed silently into the model."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the HCRM demo work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A 45-minute demo runs 24 months of de-identified claims through the live HRM interface. It is followed by a one-month free trial on your own medical and pharmacy claims, with no obligation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is this different from the reporting a TPA already provides?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "TPA reporting records what has already been paid. HRM projects the next twelve months at member and group level and expresses that projection in dollars, which is the difference between knowing your trend and having time to change it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who does HCRM serve?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Self-funded employers, benefits consultants, insurance companies, stop-loss carriers and captives, population health management teams, clinics and healthcare providers, employer clinics, health plans, third-party administrators, accountable care organizations, and health management vendors."
+          }
+        }
+      ]
+    }
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

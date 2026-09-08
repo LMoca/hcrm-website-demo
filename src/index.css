@@ -1,0 +1,290 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   HCRM design system - light
+   White ground, brand navy and cyan taken from the logo, with
+   occasional full-bleed navy bands for contrast.
+   ============================================================ */
+
+@layer base {
+  :root {
+    /* shadcn / radix bridge tokens */
+    --background: 0 0% 100%;
+    --foreground: 209 68% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 209 68% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 209 68% 12%;
+    --primary: 205 100% 27%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 213 44% 96%;
+    --secondary-foreground: 209 68% 12%;
+    --muted: 213 44% 96%;
+    --muted-foreground: 211 22% 43%;
+    --accent: 196 100% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 40% 92%;
+    --input: 214 40% 92%;
+    --ring: 205 100% 27%;
+    --radius: 0.25rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 209 68% 12%;
+    --sidebar-primary: 205 100% 27%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 213 44% 96%;
+    --sidebar-accent-foreground: 209 68% 12%;
+    --sidebar-border: 214 40% 92%;
+    --sidebar-ring: 205 100% 27%;
+
+    --gutter: 1.5rem;
+  }
+
+  @media (min-width: 768px) { :root { --gutter: 2.5rem; } }
+  @media (min-width: 1280px) { :root { --gutter: 4rem; } }
+
+  * { @apply border-line; }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #ffffff;
+  }
+
+  body {
+    @apply bg-canvas text-ink;
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.033em;
+    line-height: 1;
+  }
+
+  .tnum, table, time, .stat {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  ::selection { background: #cdeafb; color: #06263f; }
+
+  :focus-visible {
+    outline: 2px solid #00a4e4;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  /* --- layout ------------------------------------------------ */
+  .edge {
+    width: 100%;
+    max-width: 100rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .band { padding-block: 5.5rem; }
+  @media (min-width: 768px) { .band { padding-block: 7.5rem; } }
+
+  .band-tight { padding-block: 4rem; }
+  @media (min-width: 768px) { .band-tight { padding-block: 5.5rem; } }
+
+  /* --- surfaces ---------------------------------------------- */
+  .plate {
+    background: #ffffff;
+    border: 1px solid #e4eaf3;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(10, 31, 51, 0.04),
+                0 12px 32px -18px rgba(10, 31, 51, 0.16);
+  }
+
+  .plate-raised {
+    background: #ffffff;
+    border: 1px solid #e4eaf3;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(10, 31, 51, 0.04),
+                0 28px 60px -28px rgba(10, 31, 51, 0.24);
+  }
+
+  .plate-ink {
+    background: linear-gradient(168deg, #10314f 0%, #0a1f33 100%);
+    border: 1px solid #1c3a5a;
+    border-radius: 6px;
+  }
+
+  .hairline { height: 1px; background: #e4eaf3; }
+  .hairline-ink { height: 1px; background: #1c3a5a; }
+
+  /* --- imagery ------------------------------------------------
+     Images carry a partial cut rather than a full radius or a
+     border: two opposite corners rounded, two left square.      */
+  .img-cut { border-radius: 0 2.25rem 0 2.25rem; overflow: hidden; }
+  .img-cut-alt { border-radius: 2.25rem 0 2.25rem 0; overflow: hidden; }
+  .img-cut-sm { border-radius: 0 1.25rem 0 1.25rem; overflow: hidden; }
+
+  /* --- background texture ------------------------------------- */
+  .grid-field {
+    background-image: linear-gradient(to right, rgba(0, 75, 135, 0.05) 1px, transparent 1px);
+    background-size: 8.3333% 100%;
+  }
+
+  .grid-field-ink {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+    background-size: 8.3333% 100%;
+  }
+
+  /* --- type ---------------------------------------------------- */
+  .label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .display-xl {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.043em;
+    line-height: 0.95;
+    font-size: clamp(2.6rem, 6.2vw, 5.4rem);
+  }
+
+  .display-lg {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.038em;
+    line-height: 0.98;
+    font-size: clamp(2.1rem, 4.6vw, 3.75rem);
+  }
+
+  .display-md {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.032em;
+    line-height: 1.04;
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+  }
+
+  .lede {
+    font-size: 1.0625rem;
+    line-height: 1.68;
+    letter-spacing: -0.004em;
+  }
+  @media (min-width: 768px) { .lede { font-size: 1.1875rem; line-height: 1.64; } }
+
+  .prose-editorial p { font-size: 1.0625rem; line-height: 1.78; }
+  @media (min-width: 768px) { .prose-editorial p { font-size: 1.125rem; } }
+
+  /* --- actions ------------------------------------------------- */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    background: #004b87;
+    color: #ffffff;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: -0.01em;
+    padding: 0.9375rem 1.625rem;
+    border-radius: 3px;
+    border: 1px solid #004b87;
+    transition: background-color 180ms ease, border-color 180ms ease,
+                box-shadow 200ms ease, transform 120ms ease;
+    box-shadow: 0 8px 20px -10px rgba(0, 75, 135, 0.55);
+  }
+  .btn-primary:hover {
+    background: #00365f;
+    border-color: #00365f;
+    box-shadow: 0 12px 28px -10px rgba(0, 75, 135, 0.6);
+  }
+  .btn-primary:active { transform: translateY(1px); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    color: #0a1f33;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    padding: 0.9375rem 1.625rem;
+    border: 1px solid #cfdae8;
+    border-radius: 3px;
+    background: #ffffff;
+    transition: border-color 180ms ease, background-color 180ms ease;
+  }
+  .btn-outline:hover { border-color: #004b87; background: #f4f7fb; }
+
+  .btn-on-ink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    background: #ffffff;
+    color: #0a1f33;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    padding: 0.9375rem 1.625rem;
+    border-radius: 3px;
+    border: 1px solid #ffffff;
+    transition: background-color 180ms ease, border-color 180ms ease;
+  }
+  .btn-on-ink:hover { background: #e8f6fd; border-color: #e8f6fd; }
+
+  .link-rule {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .link-rule::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-rule:hover::after { transform: scaleX(1); }
+
+  .row-live {
+    transition: background-color 220ms ease, padding-left 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .row-live:hover { background: #f4f7fb; padding-left: 0.75rem; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+}
+
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: #f4f7fb; }
+::-webkit-scrollbar-thumb { background: #c3d1e2; border: 3px solid #f4f7fb; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #9db2cb; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
