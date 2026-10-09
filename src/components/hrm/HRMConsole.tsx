@@ -18,6 +18,8 @@ const tabs: { key: TabKey; label: string; caption: string }[] = [
 interface HRMConsoleProps {
   /** Hero variant: forecast only, no tab rail, tighter chrome. */
   compact?: boolean;
+  /** Tab to open on; changing it later switches the console to that view. */
+  initialTab?: TabKey;
   className?: string;
 }
 
@@ -26,8 +28,13 @@ interface HRMConsoleProps {
  * rather than mocked up as a screenshot: four real views over one synthetic
  * dataset, so a buyer can read what HRM actually outputs before booking.
  */
-const HRMConsole = ({ compact = false, className = "" }: HRMConsoleProps) => {
-  const [tab, setTab] = useState<TabKey>("forecast");
+const HRMConsole = ({ compact = false, initialTab = "forecast", className = "" }: HRMConsoleProps) => {
+  const [tab, setTab] = useState<TabKey>(initialTab);
+  const [lastInitial, setLastInitial] = useState<TabKey>(initialTab);
+  if (initialTab !== lastInitial) {
+    setLastInitial(initialTab);
+    setTab(initialTab);
+  }
   const active = tabs.find((t) => t.key === tab)!;
 
   return (

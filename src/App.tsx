@@ -1,5 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, Navigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import LensProvider from "@/context/LensProvider";
+import { useLens } from "@/context/lens-context";
+import { lensByKey } from "@/data/lenses";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -52,8 +56,10 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <LensProvider>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/for/:lens" element={<LensLink />} />
 
           {/* About */}
           <Route path="/about/who-we-are" element={<WhoWeAre />} />
@@ -108,10 +114,22 @@ const App = () => (
 
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </LensProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );
+
+// Shareable role link: /for/carriers opens the home page tailored for that role.
+function LensLink() {
+  const { lens } = useParams();
+  const { setLens } = useLens();
+  const valid = lensByKey(lens);
+  useEffect(() => {
+    if (valid) setLens(valid.key);
+  }, [valid, setLens]);
+  return <Navigate to={valid ? `/?for=${valid.key}` : "/"} replace />;
+}
 
 // Wrapper to extract slug param for blog post
 function BlogPostPageWrapper() {

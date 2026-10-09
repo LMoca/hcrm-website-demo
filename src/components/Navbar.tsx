@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown, Minus, Plus } from "lucide-react";
 import BrandLogo from "@/components/BrandLogo";
 import { navigation } from "@/data/navigation";
+import { useLens } from "@/context/lens-context";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -13,6 +14,14 @@ const Navbar = () => {
   const closeTimer = useRef<number>();
   const { pathname } = useLocation();
   const reduced = useReducedMotion();
+  const navigate = useNavigate();
+  const { lens, chosen, requestPicker } = useLens();
+  const demoHref = chosen ? `/contact?for=${lens.key}` : "/contact";
+  const changeLens = () => {
+    setMobileOpen(false);
+    if (pathname !== "/") navigate("/");
+    requestPicker();
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -121,8 +130,22 @@ const Navbar = () => {
           </nav>
 
           <div className="flex items-center gap-3">
+            {chosen && (
+              <button
+                type="button"
+                onClick={changeLens}
+                title="Change the role this site is tailored for"
+                className="hidden max-w-[19rem] items-center gap-2 rounded-full border border-line2 bg-canvas py-1.5 pl-3 pr-3.5 text-left text-[12.5px] text-dim transition-colors hover:border-cyan hover:text-ink xl:inline-flex"
+              >
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-cyan" aria-hidden="true" />
+                <span className="truncate">
+                  Viewing as <span className="font-semibold text-ink">{lens.name}</span>
+                </span>
+                <span className="shrink-0 text-navy">Change</span>
+              </button>
+            )}
             <Link
-              to="/contact"
+              to={demoHref}
               className="hidden shrink-0 items-center gap-2 rounded-[3px] border border-navy bg-navy px-5 py-2.5 text-[13.5px] font-semibold text-white shadow-[0_8px_18px_-10px_rgba(0,75,135,0.6)] transition-colors hover:border-navy-deep hover:bg-navy-deep sm:inline-flex"
             >
               Book a free demo
@@ -321,9 +344,22 @@ const Navbar = () => {
                 </div>
               ))}
 
+              {chosen && (
+                <button
+                  type="button"
+                  onClick={changeLens}
+                  className="mt-8 flex w-full items-center justify-between gap-3 rounded-[3px] border border-line2 px-4 py-3.5 text-left text-[14px] text-dim"
+                >
+                  <span>
+                    Viewing as <span className="font-semibold text-ink">{lens.name}</span>
+                  </span>
+                  <span className="shrink-0 font-semibold text-navy">Change</span>
+                </button>
+              )}
+
               <Link
-                to="/contact"
-                className="mt-8 flex w-full items-center justify-center gap-2 rounded-[3px] bg-navy px-6 py-4 text-[15px] font-semibold text-white"
+                to={demoHref}
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-[3px] bg-navy px-6 py-4 text-[15px] font-semibold text-white"
               >
                 Book a free demo
               </Link>

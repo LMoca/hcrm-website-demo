@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { Check, Mail, ShieldCheck } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -7,6 +8,8 @@ import PageHeader from "@/components/PageHeader";
 import Reveal from "@/components/kit/Reveal";
 import SectionHead from "@/components/kit/SectionHead";
 import FaqList from "@/components/FaqList";
+import { lensByKey, roleLenses } from "@/data/lenses";
+import { useLens } from "@/context/lens-context";
 
 /**
  * Trim and cap only. Escaping belongs on the server and in the storage layer;
@@ -48,10 +51,16 @@ const fieldClass =
 
 const Contact = () => {
   const reduced = useReducedMotion();
+  const [params] = useSearchParams();
+  const { lens, chosen } = useLens();
+  const fromLink = lensByKey(params.get("for"));
+  const initialRole =
+    fromLink && fromLink.key !== "general" ? fromLink.key : chosen ? lens.key : "";
   const [form, setForm] = useState({
     name: "",
     email: "",
     org: "",
+    role: initialRole,
     lives: "",
     message: "",
   });
@@ -68,6 +77,7 @@ const Contact = () => {
       name: clean(form.name, 200),
       email: clean(form.email, 200),
       org: clean(form.org, 200),
+      role: form.role === "general" ? "Something else" : lensByKey(form.role)?.name ?? "",
       lives: clean(form.lives, 40),
       message: clean(form.message, 2000),
     };
@@ -149,7 +159,7 @@ const Contact = () => {
                 <form onSubmit={handleSubmit} noValidate>
                   <span className="label text-navy">Demo request</span>
                   <h2 className="mt-5 display-md text-ink">
-                    Five fields. That's the whole gate.
+                    Six fields. That's the whole gate.
                   </h2>
 
                   <div className="mt-10 grid gap-6 sm:grid-cols-2">
@@ -224,6 +234,27 @@ const Contact = () => {
                         <option value="2500-10000">2,500 to 10,000</option>
                         <option value="10000+">Over 10,000</option>
                         <option value="na">Not applicable</option>
+                      </select>
+                    </div>
+
+                    <div className="sm:col-span-2">
+                      <label htmlFor="role" className="label block text-dim2">
+                        I&rsquo;m responsible for
+                      </label>
+                      <select
+                        id="role"
+                        name="role"
+                        value={form.role}
+                        onChange={set("role")}
+                        className={`mt-3 ${fieldClass} appearance-none`}
+                      >
+                        <option value="">Select your role</option>
+                        {roleLenses.map((l) => (
+                          <option key={l.key} value={l.key}>
+                            {l.name} ({l.blank})
+                          </option>
+                        ))}
+                        <option value="general">Something else</option>
                       </select>
                     </div>
 

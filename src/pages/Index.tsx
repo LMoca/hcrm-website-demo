@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CTASection from "@/components/CTASection";
@@ -8,14 +7,17 @@ import Reveal from "@/components/kit/Reveal";
 import SectionHead from "@/components/kit/SectionHead";
 import Counter from "@/components/kit/Counter";
 import Figure from "@/components/kit/Figure";
-import HorizonRule from "@/components/kit/HorizonRule";
-import { PrimaryCta, OutlineCta, ArrowLink } from "@/components/kit/Actions";
+import { ArrowLink } from "@/components/kit/Actions";
 import HRMConsole from "@/components/hrm/HRMConsole";
 import Pipeline from "@/components/hrm/Pipeline";
 import LagDiagram from "@/components/hrm/LagDiagram";
 import { useSeo } from "@/hooks/useSeo";
 import { personas } from "@/data/personas";
 import { testimonials } from "@/data/testimonials";
+import LensHero from "@/components/lens/LensHero";
+import LensQuestions from "@/components/lens/LensQuestions";
+import ClaimsToDollars from "@/components/lens/ClaimsToDollars";
+import { useLens } from "@/context/lens-context";
 
 const proofRail = [
   { v: "95%+", k: "Data-normalization accuracy", s: "measured across client datasets" },
@@ -143,12 +145,19 @@ const outputs = [
 ];
 
 const Index = () => {
-  const reduced = useReducedMotion();
+  const { lens, chosen } = useLens();
   useSeo(
     undefined,
     "Health Risk Monitor reads 24 months of medical and pharmacy claims and forecasts the next twelve in dollars, on a dataset normalized to 95%+ accuracy."
   );
-  const featured = testimonials.find((t) => t.featured)!;
+  const featured =
+    (chosen && testimonials.find((t) => t.author === lens.testimonial)) ||
+    testimonials.find((t) => t.featured)!;
+  const lensPersonas = new Set(lens.personaSlugs);
+  const orderedPersonas = [
+    ...personas.filter((p) => lensPersonas.has(p.slug)),
+    ...personas.filter((p) => !lensPersonas.has(p.slug)),
+  ];
   const secondary = testimonials.filter((t) => t !== featured).slice(0, 4);
 
   return (
@@ -156,101 +165,7 @@ const Index = () => {
       <Navbar />
 
       {/* ============ HERO ============ */}
-      <section className="relative overflow-hidden border-b border-line pt-[4.25rem] md:pt-[4.75rem]">
-        <div
-          className="pointer-events-none absolute inset-0 bg-cover bg-right-top"
-          style={{ backgroundImage: "url(/img/hero-field.jpg)" }}
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-r from-canvas via-canvas/85 to-transparent"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-canvas to-transparent"
-          aria-hidden="true"
-        />
-
-        <div className="edge relative grid items-center gap-12 pb-14 pt-14 lg:grid-cols-12 lg:gap-10 lg:pb-16 lg:pt-20">
-          {/* statement */}
-          <div className="min-w-0 lg:col-span-7 xl:col-span-6">
-            <motion.div
-              initial={reduced ? undefined : { opacity: 0, y: 12 }}
-              animate={reduced ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex items-center gap-3"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-cyan animate-pulse-dot" />
-              <span className="label text-cyan-deep">
-                Health Risk Monitor
-                <span className="hidden sm:inline"> &middot; Claims intelligence</span>
-              </span>
-            </motion.div>
-
-            <motion.h1
-              initial={reduced ? undefined : { opacity: 0, y: 20 }}
-              animate={reduced ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-7 display-xl text-ink"
-            >
-              See the claim
-            </motion.h1>
-
-            <HorizonRule delay={0.4} className="my-4 max-w-xl md:my-5" />
-
-            <motion.h2
-              initial={reduced ? undefined : { opacity: 0, y: 20 }}
-              animate={reduced ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-              className="display-xl text-ink/40"
-            >
-              before it forms.
-            </motion.h2>
-
-            <motion.p
-              initial={reduced ? undefined : { opacity: 0, y: 16 }}
-              animate={reduced ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="mt-8 max-w-measure lede text-pretty text-dim"
-            >
-              Health Risk Monitor reads 24 months of medical and pharmacy claims
-              and returns the next twelve: what your plan will spend, which
-              members will drive it, and how much of that you still have time to
-              change.
-            </motion.p>
-
-            <motion.div
-              initial={reduced ? undefined : { opacity: 0, y: 16 }}
-              animate={reduced ? undefined : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.42 }}
-              className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center"
-            >
-              <PrimaryCta />
-              <OutlineCta to="/about/our-software">See the platform</OutlineCta>
-            </motion.div>
-
-            <motion.p
-              initial={reduced ? undefined : { opacity: 0 }}
-              animate={reduced ? undefined : { opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.55 }}
-              className="mt-5 text-[13px] text-dim2"
-            >
-              A 45-minute demo on de-identified claims, then a month free on your
-              own data.
-            </motion.p>
-          </div>
-
-          {/* the product, sized to support the statement rather than compete */}
-          <motion.div
-            initial={reduced ? undefined : { opacity: 0, y: 24 }}
-            animate={reduced ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="min-w-0 lg:col-span-5 lg:col-start-8"
-          >
-            <HRMConsole compact />
-          </motion.div>
-        </div>
-
+      <LensHero>
         {/* proof rail: centred, no dividing rules */}
         <div className="edge relative pb-14 pt-2 md:pb-16">
           <div className="mx-auto grid max-w-6xl grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-4">
@@ -267,7 +182,9 @@ const Index = () => {
             ))}
           </div>
         </div>
-      </section>
+      </LensHero>
+
+      <LensQuestions />
 
       {/* ============ THE GAP ============ */}
       <section className="border-b border-line bg-canvas">
@@ -324,6 +241,8 @@ const Index = () => {
         </div>
       </section>
 
+      <ClaimsToDollars />
+
       {/* ============ THE PRODUCT ============ */}
       <section className="border-b border-line bg-mist">
         <div className="edge band">
@@ -339,7 +258,7 @@ const Index = () => {
           />
 
           <Reveal className="mt-14">
-            <HRMConsole />
+            <HRMConsole initialTab={lens.consoleTab} />
           </Reveal>
 
           <Reveal delay={0.1}>
@@ -481,14 +400,19 @@ const Index = () => {
           />
 
           <div className="mt-14 grid gap-x-14 md:grid-cols-2">
-            {personas.map((p, i) => (
+            {orderedPersonas.map((p, i) => (
               <Reveal key={p.slug} delay={Math.min(i, 6) * 0.04}>
                 <Link
                   to={`/clients/${p.slug}`}
                   className="row-live group block border-t border-line py-5"
                 >
-                  <span className="block font-display text-[19px] font-semibold tracking-[-0.03em] text-ink transition-colors group-hover:text-navy md:text-[21px]">
+                  <span className="flex items-center gap-3 font-display text-[19px] font-semibold tracking-[-0.03em] text-ink transition-colors group-hover:text-navy md:text-[21px]">
                     {p.shortTitle}
+                    {lensPersonas.has(p.slug) && (
+                      <span className="rounded-sm bg-cyan-soft px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-[0.12em] text-cyan-deep">
+                        Your role
+                      </span>
+                    )}
                   </span>
                   <span className="mt-1 block text-[13px] leading-snug text-dim2">
                     {p.tagline}

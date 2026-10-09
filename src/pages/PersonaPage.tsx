@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -10,6 +11,8 @@ import { PrimaryCta, ArrowLink } from "@/components/kit/Actions";
 import ServiceOutput, { type OutputKind } from "@/components/hrm/ServiceOutput";
 import type { Persona } from "@/data/personas";
 import { personas } from "@/data/personas";
+import { lensForPersona } from "@/data/lenses";
+import { useLens } from "@/context/lens-context";
 
 const outputMap: Record<string, OutputKind> = {
   "self-funded-employers": "forecast",
@@ -27,6 +30,14 @@ const outputMap: Record<string, OutputKind> = {
 
 const PersonaPage = ({ persona }: { persona: Persona }) => {
   const kind = outputMap[persona.slug] ?? "forecast";
+  const { chosen, setLens } = useLens();
+
+  // A visitor who reads a client page has told us who they are. Adopt that
+  // role for the home page, but never override a choice they made themselves.
+  useEffect(() => {
+    const match = lensForPersona(persona.slug);
+    if (!chosen && match) setLens(match.key);
+  }, [persona.slug, chosen, setLens]);
   const index = personas.findIndex((p) => p.slug === persona.slug) + 1;
   const others = personas.filter((p) => p.slug !== persona.slug);
 
