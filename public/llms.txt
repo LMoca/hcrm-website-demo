@@ -1,0 +1,18 @@
+# HCRM — Health Cost & Risk Management
+
+> Health Cost & Risk Management, LLC is a Chicago-based healthcare predictive analytics company (since 2004). Its software, Health Risk Monitor (HRM), normalizes medical and pharmacy claims to over 95% accuracy and forecasts each member's medical cost, pharmacy cost, ER visits and inpatient days for the next 12 months, with compliance against 128 clinical standards of care. SOC 2 Type 2 certified; data stored in the U.S. Contact: info@hcrm.net, (773) 782-6466.
+
+## Core pages
+
+- [Home](https://hcrm.net/): Overview of HCRM and Health Risk Monitor
+- [Our software](https://hcrm.net/about/our-software): How Health Risk Monitor works
+- [Who we serve](https://hcrm.net/clients/who-we-serve): Employers, brokers, carriers, health plans, TPAs, clinics, ACOs and care programs
+- [Contact](https://hcrm.net/contact): Request a walkthrough and one-month free trial
+
+## Services
+
+- [Healthcare predictive analytics](https://hcrm.net/services/healthcare-predictive-analytics)
+- [Data normalization & validation](https://hcrm.net/services/data-normalization-validation)
+- [Clinical reporting & outcome assessment](https://hcrm.net/services/clinical-reporting-outcome-assessment)
+- [Healthcare management software](https://hcrm.net/services/healthcare-management)
+- [Stop-loss reporting](https://hcrm.net/services/stop-loss-reporting)

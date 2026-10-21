@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const SITE = "HCRM";
-const ORIGIN = "https://www.hcrm.com";
+const ORIGIN = "https://hcrm.net";
 const DEFAULT_TITLE =
   "HCRM | Health Cost & Risk Management — Claims Predictive Analytics";
 

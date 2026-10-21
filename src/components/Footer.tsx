@@ -88,18 +88,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
-      {/* baseline */}
-      <div className="border-t border-line">
-        <div className="edge flex flex-col gap-3 py-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-[12.5px] text-dim2">
-            &copy; {year} Health Cost &amp; Risk Management. All rights reserved.
-          </p>
-          <p className="text-[12.5px] text-dim2">
-            Figures shown on this site are illustrative.
-          </p>
-        </div>
-      </div>
     </footer>
   );
 };
