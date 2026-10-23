@@ -121,15 +121,5 @@ ${routes
 ${faqGroups.map((g) => `## ${g.title}\n\n${g.items.map((f) => `### ${f.q}\n\n${f.a}\n`).join("\n")}`).join("\n")}`,
 );
 
-// Netlify-style redirects. URLs are unchanged from hcrm.net, so these only mirror WordPress
-// behavior: add the trailing slash, and send /sitemap.xml to the Yoast index.
-write(
-  "_redirects",
-  [
-    "/sitemap.xml  /sitemap_index.xml  301",
-    ...routes.filter((r) => r.path !== "/").map((r) => `${r.path.slice(0, -1)}  ${r.path}  301`),
-    "/*  /404.html  404",
-  ].join("\n") + "\n",
-);
-
-console.log(`Prerendered ${routes.length} routes + 404, sitemap_index + 4 sitemaps, robots, llms.txt, llms-full.txt, _redirects`);
+// Trailing slashes, the /sitemap.xml redirect and the 404 page are handled by vercel.json.
+console.log(`Prerendered ${routes.length} routes + 404, sitemap_index + 4 sitemaps, robots, llms.txt, llms-full.txt`);

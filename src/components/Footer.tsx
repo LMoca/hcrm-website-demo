@@ -1,95 +1,74 @@
 import { Link } from "react-router-dom";
-import { Linkedin } from "lucide-react";
-import BrandLogo from "@/components/BrandLogo";
-import { navigation } from "@/data/navigation";
+import { SITE } from "@/data/site";
+import { solutions } from "@/data/solutions";
+import { audiences } from "@/data/audiences";
 
-const legal = [
-  { label: "Privacy Policy", to: "/privacy-policy" },
-  { label: "Terms of Use", to: "/terms-of-use" },
-  { label: "Contact", to: "/contact" },
-];
-
-const Footer = () => {
-  const year = new Date().getFullYear();
-
+export default function Footer() {
   return (
-    <footer className="border-t border-line bg-canvas">
-      <div className="edge">
-        {/* Identity sits to the left of the link matrix rather than in its own
-            band above it, so the footer reads as one row. The conversion ask
-            lives in the band directly above, leaving this to identity and
-            navigation. */}
-        <div className="grid gap-x-8 gap-y-12 py-14 lg:grid-cols-12">
-          <div className="lg:col-span-3">
-            <BrandLogo size="h-11" />
-            <p className="mt-6 max-w-measure text-[15px] leading-relaxed text-dim">
-              Claims-based predictive analytics for organizations that carry
-              healthcare risk. Every forecast denominated in dollars, built on a
-              95%+ normalized dataset.
-            </p>
-          </div>
-
-          {/* link matrix */}
-          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:col-span-9 lg:grid-cols-4">
-            {navigation
-              .filter((g) => g.items)
-              .map((group) => (
-                <div key={group.label}>
-                  <h4 className="label text-dim2">{group.label}</h4>
-                  <ul className="mt-5 space-y-2.5">
-                    {[...group.items!, ...(group.spotlight?.items ?? [])].map((item) => (
-                      <li key={item.to}>
-                        <Link
-                          to={item.to}
-                          className="text-[13.5px] leading-snug text-ink/70 transition-colors hover:text-navy"
-                        >
-                          {item.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-
+    <footer className="bg-navy-night text-white/70">
+      <div className="wrap grid gap-12 py-16 md:grid-cols-12">
+        <div className="md:col-span-4">
+          <img src="/hcrm-logo-reverse.png" alt="HCRM — Health Cost & Risk Management" width={1000} height={224} className="h-10 w-auto" loading="lazy" />
+          <p className="mt-6 max-w-xs text-[15px] leading-relaxed">
+            Predictive analytics that forecasts every member's healthcare cost and clinical risk for the next 12 months. A claim avoided is money saved.
+          </p>
+          <address className="mt-6 space-y-1 text-[15px] not-italic">
             <div>
-              <h4 className="label text-dim2">Elsewhere</h4>
-              <ul className="mt-5 space-y-2.5">
-                <li>
-                  <Link
-                    to="/resources"
-                    className="text-[13.5px] text-ink/70 transition-colors hover:text-navy"
-                  >
-                    Insights
-                  </Link>
-                </li>
-                {legal.map((l) => (
-                  <li key={l.to}>
-                    <Link
-                      to={l.to}
-                      className="text-[13.5px] text-ink/70 transition-colors hover:text-navy"
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-                <li>
-                  <a
-                    href="https://www.linkedin.com/company/health-cost-risk-management-llc/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-[13.5px] text-ink/70 transition-colors hover:text-navy"
-                  >
-                    <Linkedin className="h-3.5 w-3.5" strokeWidth={1.8} />
-                    LinkedIn
-                  </a>
-                </li>
-              </ul>
+              <a href={`mailto:${SITE.email}`} className="text-white hover:text-cyan">{SITE.email}</a>
             </div>
+            <div>
+              <a href={`tel:${SITE.phone}`} className="text-white hover:text-cyan">{SITE.phoneDisplay}</a>
+            </div>
+            <div>{SITE.city}, Illinois</div>
+          </address>
+        </div>
+
+        <FooterCol title="Who we serve" links={audiences.map((a) => ({ to: `/${a.slug}/`, label: a.name }))} className="md:col-span-3" />
+        <FooterCol
+          title="Platform"
+          links={[{ to: "/our-software/", label: "Health Risk Monitor" }, ...solutions.map((s) => ({ to: `/${s.slug}/`, label: s.name }))]}
+          className="md:col-span-3"
+        />
+        <FooterCol
+          title="Company"
+          links={[
+            { to: "/who-we-are/", label: "Who we are" },
+            { to: "/why-choose-hcrm/", label: "Why HCRM" },
+            { to: "/our-team/", label: "Team" },
+            { to: "/our-partnerships/", label: "Partnerships" },
+            { to: "/testimonials-and-impact/", label: "Testimonials" },
+            { to: "/resources/", label: "Resources" },
+            { to: "/faq/", label: "FAQ" },
+            { to: "/contact/", label: "Contact" },
+          ]}
+          className="md:col-span-2"
+        />
+      </div>
+      <div className="border-t border-white/10">
+        <div className="wrap flex flex-col gap-3 py-6 text-[13px] sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; {SITE.legalName}. SOC 2 Type 2 certified. Data stored in the U.S.</p>
+          <div className="flex gap-5">
+            <Link to="/privacy/" className="hover:text-white">Privacy</Link>
+            <Link to="/terms-of-use/" className="hover:text-white">Terms of use</Link>
+            <a href={SITE.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white">LinkedIn</a>
           </div>
         </div>
       </div>
     </footer>
   );
-};
+}
 
-export default Footer;
+function FooterCol({ title, links, className }: { title: string; links: { to: string; label: string }[]; className?: string }) {
+  return (
+    <div className={className}>
+      <p className="mb-4 font-mono text-[11px] uppercase tracking-eyebrow text-cyan">{title}</p>
+      <ul className="space-y-2 text-[14.5px]">
+        {links.map((l) => (
+          <li key={l.to}>
+            <Link to={l.to} className="hover:text-white">{l.label}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
