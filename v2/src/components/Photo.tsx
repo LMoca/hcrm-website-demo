@@ -9,6 +9,8 @@ export default function Photo({
   className = "",
   eager,
   tint = true,
+  parallax,
+  reveal,
   children,
 }: {
   name: PhotoKey;
@@ -17,13 +19,23 @@ export default function Photo({
   className?: string;
   eager?: boolean;
   tint?: boolean;
+  /** The image drifts inside its frame as the page scrolls. */
+  parallax?: boolean;
+  /** Wipe the photo in when it first scrolls into view. */
+  reveal?: boolean;
   children?: ReactNode;
 }) {
   const ph = photos[name];
   const [rw, rh] = ratio.split("/").map(Number);
   const widths = [480, 800, 1200, 1600];
   return (
-    <div className={`photo relative overflow-hidden rounded-[1.25rem] bg-paper2 ${className}`} style={{ aspectRatio: ratio }}>
+    <div
+      className={`photo relative overflow-hidden rounded-[1.25rem] bg-paper2 ${className}`}
+      style={{ aspectRatio: ratio }}
+      data-scroll={parallax ? "" : undefined}
+      data-reveal={reveal ? "clip" : undefined}
+    >
+      <div className={parallax ? "par-img" : "absolute inset-0"}>
       <img
         src={photoSrc(ph, 1200, Math.round((1200 * rh) / rw))}
         srcSet={widths.map((w) => `${photoSrc(ph, w, Math.round((w * rh) / rw))} ${w}w`).join(", ")}
@@ -36,6 +48,7 @@ export default function Photo({
         className="absolute inset-0 h-full w-full object-cover"
         style={{ objectPosition: ph.pos ?? "50% 50%" }}
       />
+      </div>
       {tint && <div className="absolute inset-0 bg-gradient-to-t from-navy-night/55 via-navy-night/0 to-transparent mix-blend-multiply" aria-hidden="true" />}
       {children}
     </div>

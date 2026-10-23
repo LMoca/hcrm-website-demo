@@ -6,6 +6,8 @@ import { ConnectivityDiagram } from "@/components/Connectivity";
 import { Arrow } from "@/components/Icons";
 import { solutions } from "@/data/solutions";
 import type { Faq } from "@/data/types";
+import { InfographicSection, RiskShare } from "@/components/infographics/Panels";
+import ClaimSpike from "@/components/infographics/ClaimSpike";
 
 export const platformFaqs: Faq[] = [
   {
@@ -89,6 +91,32 @@ export default function Platform() {
           </div>
         </div>
       </section>
+
+      <section className="relative overflow-hidden bg-navy-night text-white">
+        <div className="grain-light absolute inset-0" aria-hidden="true" />
+        <div className="wrap relative py-24">
+          <div className="max-w-3xl" data-reveal="left">
+            <p className="eyebrow !text-cyan">Why it matters</p>
+            <h2 className="h-section mt-3 !text-white">One member, two versions of the same year.</h2>
+            <p className="mt-5 text-[1.1rem] leading-relaxed text-white/70">
+              Without a forecast, the gaps in care go unnoticed until the claim arrives. With Health Risk Monitor, the same member is flagged months earlier and reached while the claim can still be prevented.
+            </p>
+          </div>
+          <div className="mx-auto mt-12 grid max-w-5xl gap-8">
+            <ClaimSpike variant="unmanaged" dark />
+            <ClaimSpike variant="managed" dark />
+          </div>
+        </div>
+      </section>
+
+      <InfographicSection
+        eyebrow="Risk stratification"
+        title="See who the money follows."
+        body="HRM ranks every member by projected cost and clinical risk, so the small group driving most of your spend, and the members about to join it, are visible a year ahead."
+        link={{ to: "/healthcare-predictive-analytics/", label: "Healthcare predictive analytics" }}
+      >
+        <RiskShare />
+      </InfographicSection>
 
       <section className="border-b border-rule bg-white">
         <div className="wrap py-24">

@@ -1,3 +1,4 @@
+import Scene from "@/components/Scene";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { clients, partners, testimonials } from "@/data/site";
@@ -11,13 +12,14 @@ export default function Clients() {
 
   return (
     <section className="relative overflow-hidden bg-navy-night text-white" aria-labelledby="clients-title">
+      <Scene photo="careTeam" tone="dark" side="top" strength={0.4} />
       <div className="grain-light absolute inset-0" aria-hidden="true" />
       <div className="wrap relative py-24">
         <div className="flex flex-wrap items-end justify-between gap-6" data-reveal>
           <div className="max-w-2xl">
-            <p className="eyebrow !text-cyan">Our clients</p>
+            <p className="eyebrow !text-cyan">07 · Proof</p>
             <h2 id="clients-title" className="h-section mt-3 !text-white">
-              Care teams, clinics and analytics firms that build on HRM.
+              Care teams, clinics and analytics firms already using HRM to get ahead of claims.
             </h2>
           </div>
           <Link to="/testimonials-and-impact/" className="inline-flex items-center gap-1.5 font-semibold text-cyan hover:text-white">
@@ -26,9 +28,9 @@ export default function Clients() {
         </div>
 
         <div className="mt-14 grid gap-10 lg:grid-cols-12">
-          <ul className="lg:col-span-6" role="tablist" aria-label="HCRM clients">
+          <ul className="lg:col-span-6" role="tablist" aria-label="HCRM clients" data-stagger="90">
             {clients.map((cl, i) => (
-              <li key={cl.org} className="border-t border-white/12 last:border-b">
+              <li key={cl.org} className="border-t border-white/12 last:border-b" data-reveal="left">
                 <button
                   type="button"
                   role="tab"
@@ -56,7 +58,7 @@ export default function Clients() {
             ))}
           </ul>
 
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-6" data-reveal="right">
             <figure
               key={active}
               id="client-panel"

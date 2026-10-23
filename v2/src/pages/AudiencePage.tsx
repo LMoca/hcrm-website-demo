@@ -6,6 +6,7 @@ import { audienceBySlug, audienceGroups, audiencesInGroup } from "@/data/audienc
 import { solutionBySlug } from "@/data/solutions";
 import Photo, { Tag } from "@/components/Photo";
 import { audiencePhoto } from "@/data/photos";
+import { InfographicSection, ServiceInfographic } from "@/components/infographics/Panels";
 
 export default function AudiencePage({ slug }: { slug: string }) {
   const a = audienceBySlug(slug);
@@ -68,6 +69,15 @@ export default function AudiencePage({ slug }: { slug: string }) {
           </div>
         </div>
       </section>
+
+      <InfographicSection
+        eyebrow="What you'll see"
+        title={`${solutionBySlug(a.solutions[0]).name}, in Health Risk Monitor.`}
+        body={solutionBySlug(a.solutions[0]).description}
+        link={{ to: `/${a.solutions[0]}/`, label: `More on ${solutionBySlug(a.solutions[0]).name.toLowerCase()}` }}
+      >
+        <ServiceInfographic slug={a.solutions[0]} />
+      </InfographicSection>
 
       {/* Capabilities */}
       <section className="wrap grid gap-14 py-24 lg:grid-cols-12">

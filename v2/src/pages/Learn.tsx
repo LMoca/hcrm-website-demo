@@ -4,6 +4,7 @@ import { Answer, Checklist, FaqItems, PageHero } from "@/components/Blocks";
 import { Arrow } from "@/components/Icons";
 import { articleBySlug, articles, formatDate } from "@/data/resources";
 import { faqGroups } from "@/data/faqs";
+import { OutcomeTrend, Pipeline } from "@/components/infographics/Panels";
 
 export function Resources() {
   const [feature, ...rest] = articles;
@@ -93,6 +94,14 @@ export function ArticlePage({ slug }: { slug: string }) {
           </div>
         </div>
       </article>
+      {a.slug === "predictive-analytics-and-cost-containment" && (
+        <section className="border-t border-rule">
+          <div className="wrap max-w-5xl py-16">
+            <OutcomeTrend title="Managed catastrophic members vs. predicted cost" />
+          </div>
+        </section>
+      )}
+
       <section className="border-t border-rule bg-paper2">
         <div className="wrap py-16">
           <p className="eyebrow">Keep reading</p>
@@ -151,6 +160,16 @@ export function Guide() {
           </Answer>
         }
       />
+
+      <section className="border-b border-rule bg-white py-16">
+        <div className="wrap">
+          <Pipeline
+            steps={guideTypes.map((t) => ({ label: t.name.replace(" analytics", ""), note: t.q }))}
+            label="Healthcare analytics"
+            status="Hindsight → foresight → action"
+          />
+        </div>
+      </section>
       <section className="wrap grid gap-14 py-24 lg:grid-cols-12">
         <div className="prose-hcrm lg:col-span-7">
           <h2 className="!mt-0">Why data quality comes first</h2>

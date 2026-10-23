@@ -6,6 +6,30 @@ import { solutionBySlug, solutions } from "@/data/solutions";
 import { audienceBySlug } from "@/data/audiences";
 import Photo from "@/components/Photo";
 import { solutionPhoto } from "@/data/photos";
+import { InfographicSection, ServiceInfographic } from "@/components/infographics/Panels";
+
+const visual: Record<string, { title: string; body: string }> = {
+  "healthcare-predictive-analytics": {
+    title: "Who the money follows.",
+    body: "A small share of members drives most of the cost. HRM shows exactly which members, and which ones are about to join them, 12 months ahead.",
+  },
+  "data-normalization-and-validation": {
+    title: "From messy feeds to one clean dataset.",
+    body: "Carrier, TPA, PBM, lab and EMR records arrive in different formats, some with invalid or home-grown codes. HRM validates and maps every one, so the forecast starts from the truth.",
+  },
+  "clinical-reporting-and-outcome-assessment": {
+    title: "Proof, in dollars.",
+    body: "Track program participants against the cost HRM predicted for them. The gap between the two lines is the outcome you report.",
+  },
+  "healthcare-management": {
+    title: "From a flag to an outcome.",
+    body: "Every flagged member moves through one workflow: assignment, outreach, care plan, and an outcome measured against baseline.",
+  },
+  "stop-loss-reporting": {
+    title: "Shock losses, before renewal.",
+    body: "HRM projects each member's next 12 months of claims against the specific deductible and alerts you daily to the members likely to exceed it.",
+  },
+};
 
 export default function SolutionPage({ slug }: { slug: string }) {
   const s = solutionBySlug(slug);
@@ -19,12 +43,16 @@ export default function SolutionPage({ slug }: { slug: string }) {
       }}
     >
       <PageHero
-        crumbs={[{ name: "Platform", path: "/our-software/" }, { name: s.name, path: `/${s.slug}/` }]}
+        crumbs={[{ name: "Services", path: "/services/" }, { name: s.name, path: `/${s.slug}/` }]}
         eyebrow={`Solution · ${s.kicker}`}
         title={s.name}
         lede={s.lede}
         aside={<Photo name={solutionPhoto[s.slug]} ratio="5/4" eager sizes="(min-width: 1024px) 40vw, 100vw" className="ken" />}
       />
+
+      <InfographicSection eyebrow="See it in Health Risk Monitor" title={visual[s.slug].title} body={visual[s.slug].body}>
+        <ServiceInfographic slug={s.slug} />
+      </InfographicSection>
 
       <section className="wrap grid gap-16 py-24 lg:grid-cols-12">
         <div className="max-w-4xl lg:col-span-12">

@@ -4,6 +4,18 @@ import { Answer, PageHero, QuoteCard, SectionHead } from "@/components/Blocks";
 import { Arrow } from "@/components/Icons";
 import Photo, { Tag } from "@/components/Photo";
 import { partners, team, testimonials } from "@/data/site";
+import { InfographicSection, OutcomeTrend, YearLine, type Milestone as YearMilestone } from "@/components/infographics/Panels";
+import { ConnectivityDiagram } from "@/components/Connectivity";
+
+const milestones: YearMilestone[] = [
+  { year: "2004", title: "Predictive modeling for the self-funded market", body: "HCRM pioneers accurate predictive modeling for small and mid-size self-funded employers, once available only to large organizations." },
+  { year: "2014", title: "SIIA member", body: "HCRM joins the Self-Insurance Institute of America, the association of stop-loss carriers, MGUs, brokers, TPAs and PBMs." },
+  { year: "2018", title: "SOC 2 certified; accuracy confirmed", body: "SOC 2 Type 2 certification with AARC 360, and a comparison with the Society of Actuaries' study shows HRM leading in clinical predictive accuracy." },
+  { year: "2019", title: "The HRM Playground", body: "Outcome reporting that trends any cohort, from catastrophic members to program participants, against a baseline." },
+  { year: "2020", title: "COVID-19 reporting", body: "A report to identify plan members at elevated risk is added to Health Risk Monitor." },
+  { year: "2021", title: "Chronic Impact Score", body: "A score for the long-term impact of co-morbid chronic conditions and gaps in care, to reach members before their projected cost rises." },
+  { year: "2024", title: "$825 → $450 per member", body: "A client case study: managing the catastrophic 5% nearly halves an employer group's cost per member in two years." },
+];
 
 export function About() {
   return (
@@ -43,6 +55,19 @@ export function About() {
           <p>
             We can't change the past or the money already spent, but we can help you improve member health to minimize future claims and maximize savings. <strong>A claim avoided is money saved.</strong>
           </p>
+        </div>
+      </section>
+
+      <section className="border-b border-rule">
+        <div className="wrap grid gap-14 py-24 lg:grid-cols-12">
+          <div className="lg:col-span-4" data-reveal="left">
+            <p className="eyebrow">Since 2004</p>
+            <h2 className="h-section mt-3">Two decades of getting ahead of the claim.</h2>
+            <p className="lede mt-5">From pioneering predictive modeling for the self-funded market to SOC 2 Type 2 security and outcome reporting.</p>
+          </div>
+          <div className="lg:col-span-8">
+            <YearLine items={milestones} />
+          </div>
         </div>
       </section>
 
@@ -122,6 +147,15 @@ export function WhyHcrm() {
           ))}
         </div>
       </section>
+
+      <InfographicSection
+        eyebrow="Ahead of rising costs"
+        title="Measured in dollars, against the forecast."
+        body="HCRM expresses clinical and financial risk in dollars, then tracks what your programs actually change against the cost it predicted. That gap is the number you take to leadership."
+        link={{ to: "/clinical-reporting-and-outcome-assessment/", label: "Clinical reporting & outcomes" }}
+      >
+        <OutcomeTrend title="Members reached early vs. predicted cost" />
+      </InfographicSection>
 
       <section className="border-y border-rule bg-white">
         <div className="wrap grid gap-14 py-24 lg:grid-cols-12">
@@ -206,6 +240,23 @@ export function Partners() {
         title="Leaders in their fields, connected to the forecast."
         lede="Our partners were chosen to provide a more complete approach to healthcare services and cost management. Each leads in its field, and together we add the most value to managing member health and cost."
       />
+
+      <section className="border-b border-rule bg-white">
+        <div className="wrap grid items-center gap-14 py-20 lg:grid-cols-12">
+          <div className="lg:col-span-5" data-reveal="left">
+            <p className="eyebrow">How they connect</p>
+            <h2 className="h-section mt-3">Every partner feeds, or is fed by, the forecast.</h2>
+            <p className="lede mt-5">Wellness data, EMR biometrics and musculoskeletal programs flow into Health Risk Monitor; security audits and industry standards keep it trustworthy.</p>
+          </div>
+          <div className="lg:col-span-7">
+            <ConnectivityDiagram
+              items={partners.map((p) => ({ name: p.name.replace(/ \(.*\)/, ""), note: p.kind }))}
+              center="Partners, connected"
+              caption="MedWell, Pluritem, Upswing Health, SIIA and AARC 360 connected to Health Risk Monitor."
+            />
+          </div>
+        </div>
+      </section>
       <section className="wrap py-24">
         <div className="grid gap-5 md:grid-cols-2">
           {partners.map((p) => (
@@ -263,6 +314,15 @@ export function Testimonials() {
           </div>
         </section>
       )}
+      <InfographicSection
+        eyebrow="What clients measure"
+        title="The gap between predicted and actual."
+        body="The question every client asks: did the members we reached cost less than HRM predicted? Health Risk Monitor answers it, tracked month by month."
+        tone="white"
+      >
+        <OutcomeTrend title="Reached members vs. predicted baseline" />
+      </InfographicSection>
+
       <section className="border-t border-rule bg-paper2">
         <div className="wrap py-20">
           <SectionHead eyebrow="Measurable impact" title="$825 → $450 per member, in two years." lede="An employer group that focused on its future catastrophic members, the top 5% by spend, nearly halved cost per member." />

@@ -6,6 +6,7 @@ import Photo from "@/components/Photo";
 import { articles, formatDate } from "@/data/resources";
 import { solutions } from "@/data/solutions";
 import { solutionPhoto } from "@/data/photos";
+import { Pipeline, serviceSteps } from "@/components/infographics/Panels";
 
 /** WordPress archive URLs (/category/uncategorized/, /author/teagen/) kept so the indexed structure is unchanged. */
 export function Archive({ title, path, crumb }: { title: string; path: string; crumb: string }) {
@@ -50,6 +51,19 @@ export function Services() {
           </Answer>
         }
       />
+
+      <section className="relative overflow-hidden bg-navy-night py-20 text-white">
+        <div className="grain-light absolute inset-0" aria-hidden="true" />
+        <div className="wrap relative">
+          <div className="max-w-2xl" data-reveal="left">
+            <p className="eyebrow !text-cyan">How the services connect</p>
+            <h2 className="h-section mt-3 !text-white">One dataset, carried all the way to the outcome.</h2>
+          </div>
+          <div className="mt-10">
+            <Pipeline steps={serviceSteps} label="HRM · Services" status="Raw claims → protected plan" dark />
+          </div>
+        </div>
+      </section>
       <section className="wrap grid gap-6 py-20 md:grid-cols-2">
         {solutions.map((s, i) => (
           <Link key={s.slug} to={`/${s.slug}/`} className="card group overflow-hidden hover:border-navy hover:shadow-lg" data-reveal>

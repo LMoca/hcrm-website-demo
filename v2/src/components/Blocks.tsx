@@ -6,6 +6,7 @@ import type { Milestone } from "@/data/audiences";
 import { audienceGroups, audiencesInGroup } from "@/data/audiences";
 import { Arrow, Bars, Plus } from "./Icons";
 import Photo from "./Photo";
+import { seg, useScrollProgress } from "@/lib/progress";
 import { groupPhoto } from "@/data/photos";
 
 export function Breadcrumbs({ crumbs }: { crumbs: Crumb[] }) {
@@ -49,8 +50,9 @@ export function PageHero({
   aside?: ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-rule">
+    <section className="relative overflow-hidden border-b border-rule" data-scroll>
       <div className="grain absolute inset-0 opacity-60" aria-hidden="true" />
+      <HeroTrace />
       <div className="wrap relative pb-14 pt-10 md:pb-20 md:pt-14">
         <Breadcrumbs crumbs={crumbs} />
         <div className={`mt-10 grid gap-12 ${aside ? "lg:grid-cols-12" : ""}`}>
@@ -142,16 +144,23 @@ export function FaqItems({ faqs }: { faqs: Faq[] }) {
 }
 
 export function Timeline({ items, claim, note }: { items: Milestone[]; claim?: string; note?: boolean }) {
+  const [ref, p] = useScrollProgress(undefined, 0.75);
+  const head = seg(p, 0.05, 0.9) * (items.length - 1);
+  const pct = `${(head / (items.length - 1)) * 100}%`;
   return (
-    <div>
+    <div ref={ref}>
       <div className="relative">
-      <div className="absolute left-[7px] top-2 h-[calc(100%-1rem)] w-px bg-rule md:left-0 md:top-[7px] md:h-px md:w-full" aria-hidden="true" />
+      <div className="absolute left-[7px] top-2 h-[calc(100%-1rem)] w-0.5 bg-rule md:left-0 md:top-[6px] md:h-0.5 md:w-[calc(100%-1rem)]" aria-hidden="true">
+        <div className="h-[var(--fill)] w-full bg-gradient-to-b from-navy to-cyan md:h-full md:w-[var(--fill)] md:bg-gradient-to-r" style={{ ["--fill" as string]: pct }} />
+      </div>
       <ol className="relative grid gap-8 md:grid-cols-5 md:gap-4">
-        {items.map((m, i) => (
-          <li key={m.when} className="relative pl-8 md:pl-0 md:pt-10" data-reveal style={{ transitionDelay: `${i * 90}ms` }}>
+        {items.map((m, i) => {
+          const on = head >= i - 0.05;
+          return (
+          <li key={m.when} className={`relative pl-8 transition-all duration-700 md:pl-0 md:pt-10 ${on ? "opacity-100" : "translate-y-3 opacity-35"}`}>
             <span
-              className={`absolute left-0 top-1 h-[15px] w-[15px] rounded-full border-2 md:top-0 ${
-                i === items.length - 1 ? "border-cyan bg-cyan" : "border-navy bg-paper"
+              className={`absolute left-0 top-1 h-[15px] w-[15px] rounded-full border-2 transition-all duration-500 md:top-0 ${
+                on ? (i === items.length - 1 ? "scale-125 border-cyan bg-cyan" : "border-navy bg-navy") : "border-rule bg-paper"
               }`}
               aria-hidden="true"
             />
@@ -159,7 +168,8 @@ export function Timeline({ items, claim, note }: { items: Milestone[]; claim?: s
             <h3 className="mt-2 font-serif text-[1.2rem] leading-snug">{m.title}</h3>
             <p className="mt-2 text-[15px] leading-relaxed text-ink2">{m.body}</p>
           </li>
-        ))}
+          );
+        })}
       </ol>
       </div>
       {claim && (
@@ -264,5 +274,45 @@ export function QuoteCard({ quote, name, role, org, large }: { quote: string; na
         </span>
       </figcaption>
     </figure>
+  );
+}
+
+/** Faint claims-history-and-forecast trace behind every page hero: the site's analytical signature. */
+function HeroTrace() {
+  const hist = [62, 58, 64, 60, 66, 63, 70, 67, 72, 69, 75, 73, 79, 76, 82];
+  const X = (i: number) => 20 + i * 26;
+  const Y = (v: number) => 260 - (v - 40) * 3;
+  const line = hist.map((v, i) => `${X(i)},${Y(v)}`).join(" ");
+  const last = { x: X(hist.length - 1), y: Y(hist[hist.length - 1]) };
+  return (
+    <svg
+      viewBox="0 0 600 300"
+      preserveAspectRatio="xMaxYMax meet"
+      className="par-up pointer-events-none absolute bottom-0 right-0 h-[90%] w-[75%] max-w-[56rem] opacity-60"
+      aria-hidden="true"
+    >
+      {hist.map((v, i) => (
+        <rect key={i} x={X(i) - 6} y={Y(v)} width={12} height={300 - Y(v)} rx={2} className="fill-ink/[0.035]" />
+      ))}
+      <polyline points={line} className="draw fill-none stroke-navy/30" strokeWidth={2} style={{ ["--len" as string]: 520 }} />
+      <line x1={last.x} x2={last.x} y1={60} y2={300} className="stroke-ink/20" strokeDasharray="3 4" />
+      <text x={last.x} y={52} textAnchor="middle" className="fill-ink/30 font-mono text-[10px] tracking-[0.14em]">
+        TODAY
+      </text>
+      <polyline
+        points={`${last.x},${last.y} 470,${last.y - 50} 520,${last.y - 92} 580,${last.y - 150}`}
+        className="draw fill-none stroke-signal/40"
+        strokeWidth={2}
+        strokeDasharray="6 6"
+        style={{ ["--len" as string]: 300, animationDelay: "1s" }}
+      />
+      <polyline
+        points={`${last.x},${last.y} 470,${last.y - 18} 520,${last.y - 22} 580,${last.y - 20}`}
+        className="draw fill-none stroke-cyan/70"
+        strokeWidth={2.5}
+        style={{ ["--len" as string]: 300, animationDelay: "1.3s" }}
+      />
+      <circle cx={580} cy={last.y - 20} r={4} className="fill-cyan" />
+    </svg>
   );
 }

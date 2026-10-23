@@ -5,6 +5,7 @@ import { Arrow } from "@/components/Icons";
 import { audienceGroups, audiencesInGroup } from "@/data/audiences";
 import Photo from "@/components/Photo";
 import { audiencePhoto } from "@/data/photos";
+import { ConnectivityDiagram } from "@/components/Connectivity";
 
 export default function WhoWeServe() {
   return (
@@ -21,6 +22,25 @@ export default function WhoWeServe() {
           </Answer>
         }
       />
+
+      <section className="border-b border-rule bg-white">
+        <div className="wrap grid items-center gap-14 py-20 lg:grid-cols-12">
+          <div className="lg:col-span-5" data-reveal="left">
+            <p className="eyebrow">One forecast, many uses</p>
+            <h2 className="h-section mt-3">The same source of truth, answering each client's question.</h2>
+            <p className="lede mt-5">Advisors use it to win renewals, risk-bearers to budget, clinicians to reach patients first, and program teams to prove they worked.</p>
+          </div>
+          <div className="lg:col-span-7">
+            <ConnectivityDiagram
+              items={audienceGroups.map((g) => ({ name: g.label, note: g.question }))}
+              kicker="Health Risk Monitor"
+              center="12-month forecast"
+              caption="Health Risk Monitor's forecast serves brokers and TPAs; employers, carriers and health plans; clinics, providers and ACOs; and population health and wellness programs."
+              outward
+            />
+          </div>
+        </div>
+      </section>
 
       <section className="wrap py-24">
         <PathFinder />
